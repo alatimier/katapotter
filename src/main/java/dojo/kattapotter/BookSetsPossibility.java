@@ -2,9 +2,7 @@ package dojo.kattapotter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 class BookSetsPossibility {
@@ -14,40 +12,27 @@ class BookSetsPossibility {
 	private final int maxBookSetSize;
 	private final List<BookSet> bookSets;
 
-	BookSetsPossibility(Map<String, Integer> books, int maxBookSetSize) {
+	BookSetsPossibility(List<String> books, int maxBookSetSize) {
 		this.bookSets = new ArrayList<>();
 		this.maxBookSetSize = maxBookSetSize;
-		assignBooksToSets(new HashMap<>(books));
+		assignBooksToSets(books);
 	}
 
-	private void assignBooksToSets(Map<String, Integer> books) {
-		boolean hasMoreBooks;
-		do {
-			hasMoreBooks = false;
-			for (Map.Entry<String, Integer> bookEntry : books.entrySet()) {
-				String bookName = bookEntry.getKey();
-				Integer number = bookEntry.getValue();
-				if (number > 0) {
-					getBestBookSet(bookName).add(bookName);
-					books.put(bookName, --number);
-				}
-				hasMoreBooks = hasMoreBooks || number > 0;
+	private void assignBooksToSets(List<String> books) {
+		for (String book : books) {
+			Optional<BookSet> bestAvailableBookSet = bookSets.stream()
+					.filter(b -> b.size() < maxBookSetSize)
+					.filter(b -> !b.contains(book))
+					.findFirst();
+
+			if (bestAvailableBookSet.isPresent()) {
+				bestAvailableBookSet.get().add(book);
+			} else {
+				BookSet bookSet = new BookSet();
+				bookSet.add(book);
+				bookSets.add(bookSet);
 			}
-		} while (hasMoreBooks);
-	}
-
-	// Return the biggest available book set or a new one
-	private BookSet getBestBookSet(String bookName) {
-		Optional<BookSet> bestAvailableBookSet = bookSets.stream()
-				.filter(b -> b.size() < maxBookSetSize)
-				.filter(b -> !b.contains(bookName))
-				.findFirst();
-		if (bestAvailableBookSet.isPresent()) {
-			return bestAvailableBookSet.get();
 		}
-		BookSet bookSet = new BookSet();
-		bookSets.add(bookSet);
-		return bookSet;
 	}
 
 	BigDecimal getPrice() {
