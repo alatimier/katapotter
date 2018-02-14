@@ -1,7 +1,6 @@
 package dojo.kattapotter;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -38,7 +37,7 @@ public class CartTest {
 	}
 
 	@Test
-	public void should_apply_10_percent_discount_for_two_different_books() {
+	public void should_apply_5_percent_discount_for_two_different_books() {
 		// Given
 		cart.addBook(BOOK1);
 		cart.addBook(BOOK2);
@@ -47,11 +46,11 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("14.4"), price);
+		Assert.assertEquals(new BigDecimal("15.2"), price);
 	}
 
 	@Test
-	public void should_apply_20_percent_discount_for_three_different_books() {
+	public void should_apply_10_percent_discount_for_three_different_books() {
 		// Given
 		cart.addBook(BOOK1);
 		cart.addBook(BOOK2);
@@ -61,11 +60,11 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("19.2"), price);
+		Assert.assertEquals(new BigDecimal("21.6"), price);
 	}
 
 	@Test
-	public void should_apply_30_percent_discount_for_four_different_books() {
+	public void should_apply_20_percent_discount_for_four_different_books() {
 		// Given
 		cart.addBook(BOOK1);
 		cart.addBook(BOOK2);
@@ -76,11 +75,11 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("22.4"), price);
+		Assert.assertEquals(new BigDecimal("25.6"), price);
 	}
 
 	@Test
-	public void should_apply_40_percent_discount_for_five_different_books() {
+	public void should_apply_25_percent_discount_for_five_different_books() {
 		// Given
 		cart.addBook(BOOK1);
 		cart.addBook(BOOK2);
@@ -92,7 +91,7 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("24"), price);
+		Assert.assertEquals(new BigDecimal("30"), price);
 	}
 
 	@Test
@@ -109,7 +108,7 @@ public class CartTest {
 	}
 
 	@Test
-	public void should_apply_10_percent_discount_for_a_two_books_set_and_normal_price_for_another_one_book_set() {
+	public void should_apply_5_percent_discount_for_a_two_books_set_and_normal_price_for_another_one_book_set() {
 		// Given
 		cart.addBook(BOOK1);
 		cart.addBook(BOOK1);
@@ -119,12 +118,12 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("22.4"), price);
+		Assert.assertEquals(new BigDecimal("23.2"), price);
 	}
 
-	// Note that this is cheaper then one set of 5 and one set of 3
+	// Note that two sets of 4 is cheaper than one set of 5 and one set of 3
 	@Test
-	public void should_apply_30_percent_discount_for_a_two_books_set_40_percent_discount_for_another_four_book_set() {
+	public void should_apply_the_best_possible_discount() {
 		// Given
 		cart.addBook(BOOK1);
 		cart.addBook(BOOK1);
@@ -139,7 +138,7 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("44.8"), price);
+		Assert.assertEquals(new BigDecimal("51.2"), price);
 	}
 
 }
