@@ -33,7 +33,7 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("8"), price);
+		Assert.assertEquals(new BigDecimal("8.00"), price);
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("15.2"), price);
+		Assert.assertEquals(new BigDecimal("15.20"), price);
 	}
 
 	@Test
@@ -60,7 +60,7 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("21.6"), price);
+		Assert.assertEquals(new BigDecimal("21.60"), price);
 	}
 
 	@Test
@@ -75,7 +75,7 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("25.6"), price);
+		Assert.assertEquals(new BigDecimal("25.60"), price);
 	}
 
 	@Test
@@ -91,7 +91,7 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("30"), price);
+		Assert.assertEquals(new BigDecimal("30.00"), price);
 	}
 
 	@Test
@@ -104,7 +104,7 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("16"), price);
+		Assert.assertEquals(new BigDecimal("16.00"), price);
 	}
 
 	@Test
@@ -118,7 +118,7 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("23.2"), price);
+		Assert.assertEquals(new BigDecimal("23.20"), price);
 	}
 
 	// Note that two sets of 4 is cheaper than one set of 5 and one set of 3
@@ -138,7 +138,7 @@ public class CartTest {
 		BigDecimal price = cart.checkout();
 
 		// Then
-		Assert.assertEquals(new BigDecimal("51.2"), price);
+		Assert.assertEquals(new BigDecimal("51.20"), price);
 	}
 
 }

@@ -40,7 +40,7 @@ class BookSetsPossibility {
 				.map(bookSet -> new BigDecimal(bookSet.size())
 						.multiply(BOOK_PRICE)
 						.multiply(new BigDecimal(bookSet.getDiscount()))
-						.divide(new BigDecimal(100))
+						.divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_DOWN)
 				)
 				.reduce(BigDecimal::add)
 				.orElse(BigDecimal.ZERO);
