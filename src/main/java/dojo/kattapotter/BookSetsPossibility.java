@@ -1,7 +1,9 @@
 package dojo.kattapotter;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,13 +22,13 @@ class BookSetsPossibility {
 
 	private void assignBooksToSets(List<String> books) {
 		for (String book : books) {
-			Optional<BookSet> bestAvailableBookSet = bookSets.stream()
-					.filter(b -> b.size() < maxBookSetSize)
-					.filter(b -> !b.contains(book))
+			Optional<BookSet> biggestAvailableBookSet = bookSets.stream()
+					.filter(bookSet -> bookSet.size() < maxBookSetSize && !bookSet.contains(book))
+					.sorted(Comparator.comparing(BookSet::size).reversed())
 					.findFirst();
 
-			if (bestAvailableBookSet.isPresent()) {
-				bestAvailableBookSet.get().add(book);
+			if (biggestAvailableBookSet.isPresent()) {
+				biggestAvailableBookSet.get().add(book);
 			} else {
 				BookSet bookSet = new BookSet();
 				bookSet.add(book);
@@ -40,7 +42,7 @@ class BookSetsPossibility {
 				.map(bookSet -> new BigDecimal(bookSet.size())
 						.multiply(BOOK_PRICE)
 						.multiply(new BigDecimal(bookSet.getDiscount()))
-						.divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_DOWN)
+						.divide(new BigDecimal(100), 2, RoundingMode.HALF_DOWN)
 				)
 				.reduce(BigDecimal::add)
 				.orElse(BigDecimal.ZERO);
