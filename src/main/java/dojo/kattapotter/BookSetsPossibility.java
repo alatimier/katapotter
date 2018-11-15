@@ -3,29 +3,27 @@ package dojo.kattapotter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Comparator.comparing;
 
 class BookSetsPossibility {
 
 	private static final BigDecimal BOOK_PRICE = new BigDecimal(8);
 
-	private final int maxBookSetSize;
 	private final List<BookSet> bookSets;
 
 	BookSetsPossibility(List<String> books, int maxBookSetSize) {
-		this.bookSets = new ArrayList<>();
-		this.maxBookSetSize = maxBookSetSize;
-		assignBooksToSets(books);
+		this.bookSets = generateBookSets(books, maxBookSetSize);
 	}
 
-	private void assignBooksToSets(List<String> books) {
+	private List<BookSet> generateBookSets(List<String> books, int maxBookSetSize) {
+		List<BookSet> bookSets = new ArrayList<>();
 		for (String book : books) {
 			Optional<BookSet> biggestAvailableBookSet = bookSets.stream()
 					.filter(bookSet -> bookSet.size() < maxBookSetSize && !bookSet.contains(book))
-					.sorted(Comparator.comparing(BookSet::size).reversed())
-					.findFirst();
+					.max(comparing(BookSet::size));
 
 			if (biggestAvailableBookSet.isPresent()) {
 				biggestAvailableBookSet.get().add(book);
@@ -35,6 +33,7 @@ class BookSetsPossibility {
 				bookSets.add(bookSet);
 			}
 		}
+		return bookSets;
 	}
 
 	BigDecimal getPrice() {
