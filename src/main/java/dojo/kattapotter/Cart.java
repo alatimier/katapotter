@@ -2,6 +2,7 @@ package dojo.kattapotter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -16,9 +17,8 @@ public class Cart {
 
 	public BigDecimal checkout() {
 		return generateAllBookSetsPossibilities().stream()
+				.min(Comparator.comparing(BookSetsPossibility::getPrice))
 				.map(BookSetsPossibility::getPrice)
-				.sorted()
-				.findFirst()
 				.orElse(BigDecimal.ZERO);
 	}
 
